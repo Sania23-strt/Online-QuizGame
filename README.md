@@ -1,90 +1,12 @@
-# codealpha_tasks-task2
-#include <iostream>
-#include <vector>
-#include <string>
+Interactive Online Quiz Game where users can test their knowledge across various categories and difficulty levels. The game presents multiple-choice questions, tracks scores, and gives instant feedback after each answer.
 
-using namespace std;
+Key Features:
 
-// User class for handling user information
-class User {
-public:
-    string name;
-    int score;
+1.User-friendly interface with question display and answer options
 
-    User(string userName) {
-        name = userName;
-        score = 0;
-    }
-};
+2.Real-time score tracking and result summary at the end
 
-// Question class for handling questions, options, and answers
-class Question {
-public:
-    string questionText;
-    vector<string> options;
-    int correctAnswerIndex;
+3.Multiple categories (e.g., General Knowledge, Science, History)
 
-    Question(string qText, vector<string> opts, int correctIndex) {
-        questionText = qText;
-        options = opts;
-        correctAnswerIndex = correctIndex;
-    }
+4.Difficulty levels (Easy, Medium, Hard)
 
-    bool checkAnswer(int userAnswer) {
-        return userAnswer == correctAnswerIndex;
-    }
-};
-
-// Quiz class for managing the entire quiz
-class Quiz {
-private:
-    vector<Question> questions;
-public:
-    void addQuestion(Question q) {
-        questions.push_back(q);
-    }
-
-    void startQuiz(User &user) {
-        cout << "Starting quiz for " << user.name << "...\n\n";
-        for (size_t i = 0; i < questions.size(); i++) {
-            cout << "Q" << i + 1 << ": " << questions[i].questionText << "\n";
-            for (size_t j = 0; j < questions[i].options.size(); j++) {
-                cout << j + 1 << ": " << questions[i].options[j] << "\n";
-            }
-            int userAnswer;
-            cout << "Your answer: ";
-            cin >> userAnswer;
-
-            if (questions[i].checkAnswer(userAnswer - 1)) {
-                cout << "Correct!\n";
-                user.score++;
-            } else {
-                cout << "Wrong! Correct answer was: " << questions[i].options[questions[i].correctAnswerIndex] << "\n";
-            }
-            cout << endl;
-        }
-
-        cout << "Quiz over! " << user.name << ", your score is: " << user.score << "/" << questions.size() << "\n";
-    }
-};
-
-int main() {
-    // User registration
-    string userName;
-    cout << "Enter your name to register: ";
-    getline(cin, userName);
-    User user(userName);
-
-    // Initialize quiz
-   Quiz quiz;
-
-    // Adding questions to the quiz
-  quiz.addQuestion(Question("Which Country is known as the 'Land of the Rising Sun?'", { "Berlin", "Japan", "Paris", "Rome" }, 1));
-    quiz.addQuestion(Question("What is the Largest island in the world? ", { "Greenland", "Victoria", "Madagascar", "Honshu" }, 0));
-    quiz.addQuestion(Question("Who Painted 'the Last Supper?'", { "Heles guwei", "Armystry nekola", "Vinci", "Leonard da Vinci" }, 3));
-
-    // Start the quiz
-    quiz.startQuiz(user);
-
-    return 0;
-}
